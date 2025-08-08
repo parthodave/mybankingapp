@@ -5,6 +5,7 @@ import { ACCOUNTS } from '../../Shared/data';
 @Component({
   selector: 'app-cash-order',
   imports: [CommonModule, FormsModule],
+  standalone: true,
  template: `
     <h3>Cash Order</h3>
     <form (ngSubmit)="submit()">
@@ -27,8 +28,19 @@ import { ACCOUNTS } from '../../Shared/data';
 })
 export class CashOrderComponent {
  accounts = ACCOUNTS;
-  accountId = '';
+  accountId = 0;
   amount = 0;
   result: any = null;
+
+  submit(){
+    const account = this.accounts.find(p=> p.id == this.accountId)
+    if(!account) return;
+
+    const fee = this.amount * 0.025;
+    const total = this.amount + fee;
+    const newBalance = account.balance - total;
+
+    this.result = { fee, total, newBalance }
+  }
   
 }
