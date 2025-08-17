@@ -5,7 +5,7 @@ import { USERS } from '../Shared/data';
 })
 export class AuthService {
 currentuser = signal<{username: string, role: string} | null>(null);
-isAuthenticated = computed(() => this.currentuser != null);
+isAuthenticated = computed(() => this.currentuser() != null);
 
    constructor() {
     const user = localStorage.getItem('user');
